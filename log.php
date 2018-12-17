@@ -30,7 +30,7 @@ class log{
 		}
 		$log_data="------------------------ ".date("Y-m-d G:i:s")." --------------------------\r\n\r\n";
 		$log_data.=$_SERVER['REQUEST_METHOD']." ".$_SERVER['REQUEST_URI']." ".$_SERVER['SERVER_PROTOCOL']."\r\n";
-		foreach(getallheaders() as $head=>$value){
+		foreach($this->getallheaders() as $head=>$value){
 			$log_data.=$head.": ".$value."\r\n";
 		}
 		$log_data.="\r\n\r\n";
@@ -48,6 +48,16 @@ class log{
 		}
 		fwrite($log_handle, $log_data);
 		fclose($log_handle);
+	}
+
+	public function getallheaders(){
+		$headers = [];
+		foreach ($_SERVER as $name => $value){
+			if (substr($name, 0, 5) == 'HTTP_'){
+				$headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+			}
+		}
+		return $headers;
 	}
 }
 
