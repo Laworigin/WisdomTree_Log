@@ -12,7 +12,7 @@ function include_all($dir){
 			if(array_key_exists('extension', $file_info)){
 				if($file_info['extension']=="php"){
 					$tmp=file_get_contents($dir."/".$file);
-					file_put_contents($dir."/".$file,"<?php require_once('".getcwd()."/log.php');?>\r\n".$tmp);
+					@file_put_contents($dir."/".$file,"<?php require_once('".getcwd()."/log.php');?>\r\n".$tmp);
 				}
 			}
 		}
